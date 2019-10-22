@@ -19,11 +19,11 @@ def get_msg_and_reply(msg):
         if rec_msg == "stop":
             set_bot_setting("is_bot_reply", "False")
             print("自动回复已经停止！")
-            write_log("用户“%s”已经停止了自动回复功能！" % my_name)
+            write_log("To(%s)：自动回复辅助功能关闭成功！" % my_name, True)
         elif rec_msg == "start":
             set_bot_setting("is_bot_reply", "True")
             print("自动回复功能开启")
-            write_log("用户“%s”已经开启了自动回复功能！" % my_name)
+            write_log("To(%s)：自动回复辅助功能开启成功！" % my_name, True)
         else:
             print("新消息@ (%s)对方：%s  内容：%s  （自己的消息不会自动回复！）" % (create_time, my_name, rec_msg))
         return
@@ -39,7 +39,7 @@ def get_msg_and_reply(msg):
                 duanzi = get_duanzi()[0]
                 a_id = duanzi[0]
                 article = "(*^__^*) " + duanzi[1]
-                write_log("回复“%s”的笑话，笑话id：%s" % (name, a_id))
+                write_log("To(%s)：的笑话，笑话id：%s" % (name, a_id), True)
                 return article
             elif rec_msg == '2':
                 result = get_movie()[0]
@@ -58,10 +58,10 @@ def get_msg_and_reply(msg):
                 reply_msg = "电影推荐：\n中文名：%s\n英文名：%s\n导演：%s\n主演：%s\n电影类型：%s\n总票房：%s\n时长：%s\n上映时间：%s\n制式：%s\n发行：%s\n海报：%s" % (
                     cn_name, en_name, director, actors, movie_type, box_count, duration, release_time, zhishi, distributor,
                     img_url)
-                write_log("回复“%s”的电影推荐，电影cid：%s" % (name, m_id))
+                write_log("To(%s)：的电影推荐，电影cid：%s" % (name, m_id), True)
                 return reply_msg
             elif rec_msg == '3':
-                write_log("回复“%s”查看院线热映电影！" % name)
+                write_log("To(%s)：查看院线热映电影！" % name, True)
                 reply_msg = "查看院线热映电影\n查看所有热映电影票房等信息，请回复：31\n查找某电影在映信息，回复：32@（电影名）\
                 如：32@我和我的祖国\n查看国内今天当前总票房，回复：33\n查看当前热映电影，回复：34"
                 return reply_msg
@@ -80,10 +80,10 @@ def get_msg_and_reply(msg):
                             movie['box_rate'],
                             movie['show_info'], movie['show_rate'], movie['avg_show_view'], movie['avg_seat_view'])
                         reply_msg += res_msg
-                    write_log("回复“%s”，查看今日热映电影数据" % name)
+                    write_log("To(%s)：查看今日热映电影数据" % name, True)
                     return reply_msg
                 else:
-                    write_log("“%s”的查看所有热映电影数据异常！" % name)
+                    write_log("To(%s)：查看所有热映电影数据异常！" % name, True)
                     return "网络异常，请稍后重试！"
             elif rec_msg.startswith('32'):
                 rec_msg.strip()
@@ -102,10 +102,10 @@ def get_msg_and_reply(msg):
                                         movie['box_rate'],
                                         movie['show_info'], movie['show_rate'], movie['avg_show_view'],
                                         movie['avg_seat_view'])
-                                    write_log("回复“%s”，查看“%s”关键字的电影票房数据！" % (name, words[1]))
+                                    write_log("To(%s)：查看“%s”关键字的电影票房数据！" % (name, words[1]), True)
                                 return res_msg
                         else:
-                            write_log("“%s”的查看“%s”关键字的电影票房数据异常！" % (name, words[1]))
+                            write_log("To(%s)：查看“%s”关键字的电影票房数据异常！" % (name, words[1]), True)
                             return "网络异常，请稍后重试！"
                 return "自动回复消息：\n出错：\n1、没有按照格式输入\n2、该电影未上映或已下映或没有改电影\n3、电影名称输入有误"
             elif rec_msg == '33':
@@ -113,10 +113,10 @@ def get_msg_and_reply(msg):
                 info = box.get_count_box()
                 if not info == "error":
                     reply_msg = "截止时间：%s\n当日当前总票房：%s万" % (info['server_time'], info['total_box'])
-                    write_log("回复“%s”查看今日总票房！" % name)
+                    write_log("To(%s)：查看今日总票房！" % name, True)
                     return reply_msg
                 else:
-                    write_log("回复“%s”的查看所有热映电影数据异常！" % name)
+                    write_log("To(%s)：的查看所有热映电影数据异常！" % name, True)
                     return "网络异常，请稍后重试！"
             elif rec_msg == '34':
                 box = Box()
@@ -125,10 +125,10 @@ def get_msg_and_reply(msg):
                     reply_msg = "今日共有%d部电影热映中\n" % len(movies)
                     for movie in movies:
                         reply_msg += movie + "\n"
-                    write_log("回复“%s”查看今日所有热映电影名称！" % name)
+                    write_log("To(%s)：查看今日所有热映电影名称！" % name, True)
                     return reply_msg
                 else:
-                    write_log("“%s”的查看所有热映电影数据异常！" % name)
+                    write_log("To(%s)：的查看所有热映电影数据异常！" % name, True)
                     return "网络异常，请稍后重试！"
             elif rec_msg == '4':
                 reply_msg = "查看所有即将上映电影，请回复：41\n\n查询即将上映电影，请回复：42@（电影名） 如42@中国机长"
@@ -138,17 +138,17 @@ def get_msg_and_reply(msg):
                 coming = MovieComing()
                 movies = coming.get_all_movies()
                 if movies == 'error':
-                    log_msg = "回复“%s”的查询所有机上上映电影错误" % name
+                    log_msg = "To(%s)：的查询所有机上上映电影错误" % name
                     reply_msg = "自动回复消息：网络错误，请稍后重试！"
                 elif movies:
-                    log_msg = "回复“%s”查询所有即将上映的电影成功" % name
+                    log_msg = "To(%s)：查询所有即将上映的电影成功" % name
                     reply_msg = ""
                     for movie in movies:
                         reply_msg += "电影名：%s\n类型：%s\n地区：%s\n上映时间：%s\n\n" % (movie['name'], movie['type'], movie['location'], movie['movie_time'])
                 else:
-                    log_msg = "回复“%s”查询所有即将上映的电影，没有找到数据！"
+                    log_msg = "To(%s)：查询所有即将上映的电影，没有找到数据！"
                     reply_msg = "自动回复消息：暂时没有数据！"
-                write_log(log_msg)
+                write_log(log_msg, True)
                 return reply_msg
             elif rec_msg.startswith("42"):
                 if rec_msg.startswith("42@"):
@@ -157,17 +157,17 @@ def get_msg_and_reply(msg):
                         coming = MovieComing()
                         movies = coming.find_movies(words[1])
                         if movies == "error":
-                            write_log("回复“%s”的查询关键字即将上映电影错误" % name)
+                            write_log("To(%s)：查询关键字即将上映电影错误" % name, True)
                             return "自动回复消息：网络错误，请稍后重试！"
-                        log_msg = "回复“%s”查找“%s”关键字的即将上映电影成功" % (name, words[1])
+                        log_msg = "To(%s)：查找“%s”关键字的即将上映电影成功" % (name, words[1])
                         reply_msg = ""
                         for movie in movies:
                             reply_msg += "电影名：%s\n类型：%s\n地区：%s\n上映时间：%s\n\n" % (
                             movie['name'], movie['type'], movie['location'], movie['movie_time'])
-                        write_log(log_msg)
+                        write_log(log_msg, True)
                         return reply_msg
-                log_msg = "回复“%s”查找关键字的即将上映电影失败，输入：%s" % (name, rec_msg)
-                write_log(log_msg)
+                log_msg = "To(%s)：查找关键字的即将上映电影失败，输入：%s" % (name, rec_msg)
+                write_log(log_msg, True)
                 return "自动回复消息：\n出错：\n1、没有按照格式输入\n2、没有该电影的即将上映信息"
             elif rec_msg.startswith('5'):
                 if rec_msg.startswith('5@'):
@@ -176,26 +176,26 @@ def get_msg_and_reply(msg):
                         trans = Translator(service_urls=['translate.google.cn'])
                         text = trans.translate(words[1]).text
                         reply_msg = "原文：%s\n译文：%s" % (words[1], text)
-                        write_log("回复“%s”翻译，内容：%s" % (name, words[1]))
+                        write_log("To(%s)：   翻译，内容：%s   译文：%s" % (name, words[1], text), True)
                     else:
                         reply_msg = "请输入要翻译内容！"
-                        write_log("回复“%s”翻译，错误，未输入需要翻译的内容，对方的输入：%s！" % (name, rec_msg))
+                        write_log("To(%s)：翻译@错误，未输入需要翻译的内容，对方的输入：%s！" % (name, rec_msg), True)
                 else:
                     reply_msg = '中英文翻译请按照“5@（翻译文）”格式输入，如：5@你好！'
-                    write_log("回复“%s”，需要翻译，对方输入：%s" % (name, rec_msg))
+                    write_log("To(%s)：需要翻译，对方输入：%s" % (name, rec_msg), True)
                 return reply_msg
             elif rec_msg == "0":
                 reply_msg = "<Clone with HTTPS>https://github.com/rauiy666/wechat.git"
-                write_log("回复“%s”，获取项目clone地址：%s" % (name, reply_msg))
+                write_log("To(%s)：获取项目clone地址：%s" % (name, reply_msg), True)
                 return reply_msg
             else:
                 message = "新消息@ (%s)对方：%s  内容：%s" % (create_time, name, rec_msg)
                 print(message)
-                write_log(message)
+                write_log(message, True)
                 local_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))
                 reply_msg = "%s,这是“%s”的自动回复消息：我正在忙，请稍后联系我哦，谢谢！\n\n看笑话，回复：1\n\n电影推荐，回复：2\n\n实时票房，回复：3\n\n即将上映电影，回复：4\n\n中英文翻译，回复：5\n\n获取本项目源代码，回复：0" % (
                     local_time, my_name)
-                write_log("回复“%s”消息：%s" % (name, reply_msg.replace("\n", "")))
+                write_log("回复“%s”消息：%s" % (name, reply_msg.replace("\n", "")), True)
                 return reply_msg
 
 
@@ -207,7 +207,7 @@ def get_bot_setting(setting_name):
             write_log("读取配置：%s" % line)
             return key_words[1].strip()
         else:
-            write_log("读取配置文件错误，在“%s”中没有“%s”的配置" % (config_path, setting_name))
+            write_log("读取配置文件错误，在“%s”中没有“%s”的配置" % (config_path, setting_name), True)
             return 'error'
 
 
@@ -233,23 +233,25 @@ def set_bot_setting(setting_name, setting_words):
     if not has_same_setting:
         new_line = setting_name + "=" + setting_words
         if index == len(lines):
-            msg = "用户“%s”增加了设置配置：%s" % (my_name, new_line)
+            msg = "Admin(%s)：增加了设置配置：%s" % (my_name, new_line)
             print(msg)
         else:
-            msg = "用户“%s”修改了配置，将“%s”修改为“%s”" % (my_name, old_line, new_line)
+            msg = "Admin(%s)：修改了配置，将“%s”修改为“%s”" % (my_name, old_line, new_line)
             print(msg)
-        write_log(msg)
+        write_log(msg, True)
         lines.append(new_line)
         file_content = "\n".join(lines)
         with open(config_path, "w") as f:
             f.write(file_content)
     else:
-        print("用户“%s”该设置配置与您指定的相同，配置：%s！" % (my_name, old_line))
+        print("Admin(%s)：该设置配置与您指定的相同，配置：%s！" % (my_name, old_line))
 
 
-def write_log(msg):
+def write_log(msg, should_send_to_admin=False):
     t_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))
-    msg = t_time + "        " + msg + "\n\n"
+    msg = t_time + " | " + msg + "\n\n"
+    if should_send_to_admin:
+        send_info_to_filehelper(msg)
     with open("weChat.log", "a+", encoding="utf-8") as f:
         f.write(msg)
 
@@ -262,6 +264,10 @@ def get_duanzi():
     return result
 
 
+def send_info_to_filehelper(msg):
+    itchat.send(msg, toUserName="filehelper")
+
+
 def get_movie():
     db = MysqlHelper(mysqldb='movies')
     sql = "select * from cn_movies order by rand() LIMIT 1"
@@ -271,9 +277,19 @@ def get_movie():
 
 
 def get_user_info():
+    should_bot_reply = get_bot_setting("is_bot_reply")
+    msg = ""
+    if should_bot_reply == "False":
+        msg = "自动回复功能关闭！"
+        print(msg)
+    elif should_bot_reply == "True":
+        msg = "自动回复功能开启！"
+        print(msg)
     friends = itchat.get_friends(update=True)
     me = friends[0]['NickName']
     print("欢迎登陆：", me)
+    msg = "微信辅助系统启动成功 || " + msg
+    write_log(msg, True)
     del friends[0]
     user_list = []
     for friend in friends:
@@ -288,12 +304,11 @@ def get_user_info():
     return user_list, me
 
 
+def exit_wechat():
+    write_log("微信辅助系统关闭成功", True)
+
+
 if __name__ == '__main__':
-    itchat.auto_login()
+    itchat.auto_login(exitCallback=exit_wechat)
     users, my_name = get_user_info()
-    is_bot_reply = get_bot_setting("is_bot_reply")
-    if is_bot_reply == "False":
-        print("自动回复功能已经关闭！")
-    elif is_bot_reply == "True":
-        print("自动回复已经功能开启！")
     itchat.run()
