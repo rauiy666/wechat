@@ -1,3 +1,4 @@
+import sys
 import time
 
 import itchat
@@ -24,6 +25,8 @@ def get_msg_and_reply(msg):
             set_bot_setting("is_bot_reply", "True")
             print("自动回复功能开启")
             write_log("Admin(%s)：自动回复辅助功能开启成功！" % my_name, True)
+        elif rec_msg == "logout":
+            exit_wechat()
         else:
             print("新消息@ (%s)对方：%s  内容：%s  （自己的消息不会自动回复！）" % (create_time, my_name, rec_msg))
         return
@@ -280,15 +283,15 @@ def get_user_info():
     should_bot_reply = get_bot_setting("is_bot_reply")
     msg = ""
     if should_bot_reply == "False":
-        msg = "自动回复功能关闭！"
+        msg = "自动回复功能已经关闭！"
         print(msg)
     elif should_bot_reply == "True":
-        msg = "自动回复功能开启！"
+        msg = "自动回复功能已经开启！"
         print(msg)
     friends = itchat.get_friends(update=True)
     me = friends[0]['NickName']
     print("欢迎登陆：", me)
-    msg = "微信辅助系统启动成功 || " + msg
+    msg = "Admin(%s)登录成功\n微信辅助系统启动成功 || %s" % (me, msg)
     write_log(msg, True)
     del friends[0]
     user_list = []
@@ -306,9 +309,11 @@ def get_user_info():
 
 def exit_wechat():
     write_log("微信辅助系统关闭成功", True)
+    itchat.logout()
+    sys.exit()
 
 
 if __name__ == '__main__':
-    itchat.auto_login(exitCallback=exit_wechat)
+    itchat.auto_login()
     users, my_name = get_user_info()
     itchat.run()
