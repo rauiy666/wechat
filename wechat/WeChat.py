@@ -19,11 +19,11 @@ def get_msg_and_reply(msg):
         if rec_msg == "stop":
             set_bot_setting("is_bot_reply", "False")
             print("自动回复已经停止！")
-            write_log("To(%s)：自动回复辅助功能关闭成功！" % my_name, True)
+            write_log("Admin(%s)：自动回复辅助功能关闭成功！" % my_name, True)
         elif rec_msg == "start":
             set_bot_setting("is_bot_reply", "True")
             print("自动回复功能开启")
-            write_log("To(%s)：自动回复辅助功能开启成功！" % my_name, True)
+            write_log("Admin(%s)：自动回复辅助功能开启成功！" % my_name, True)
         else:
             print("新消息@ (%s)对方：%s  内容：%s  （自己的消息不会自动回复！）" % (create_time, my_name, rec_msg))
         return
