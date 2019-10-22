@@ -184,12 +184,16 @@ def get_msg_and_reply(msg):
                     reply_msg = '中英文翻译请按照“5@（翻译文）”格式输入，如：5@你好！'
                     write_log("回复“%s”，需要翻译，对方输入：%s" % (name, rec_msg))
                 return reply_msg
+            elif rec_msg == "0":
+                reply_msg = "<Clone with HTTPS>https://github.com/rauiy666/wechat.git"
+                write_log("回复“%s”，获取项目clone地址：%s" % (name, reply_msg))
+                return reply_msg
             else:
                 message = "新消息@ (%s)对方：%s  内容：%s" % (create_time, name, rec_msg)
                 print(message)
                 write_log(message)
                 local_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))
-                reply_msg = "%s,这是“%s”的自动回复消息：我正在忙，请稍后联系我哦，谢谢！\n\n看笑话，回复：1\n\n电影推荐，回复：2\n\n实时票房，回复：3\n\n即将上映电影，回复：4\n\n中英文翻译，回复：5" % (
+                reply_msg = "%s,这是“%s”的自动回复消息：我正在忙，请稍后联系我哦，谢谢！\n\n看笑话，回复：1\n\n电影推荐，回复：2\n\n实时票房，回复：3\n\n即将上映电影，回复：4\n\n中英文翻译，回复：5\n\n获取本项目源代码，回复：0" % (
                     local_time, my_name)
                 write_log("回复“%s”消息：%s" % (name, reply_msg.replace("\n", "")))
                 return reply_msg
